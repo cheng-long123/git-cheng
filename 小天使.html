@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="lib/jquery.js"></script>
+    <style>
+        img {
+            position: absolute;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <img src="images/angel.gif" alt="">
+    <script>
+        var width = $('img').width() / 2;
+        var height = $('img').height() / 2;
+        var time = null;
+        console.log(width, height);
+
+        $(document).on('mousemove', function (e) {
+            if (time != null) {
+                return;
+            }
+            time = setTimeout(function () {
+                var x = e.pageX;
+                var y = e.pageY;
+                console.log(123);
+                $('img').css({
+                    left: x - width + 'px',
+                    top: y - height + 'px'
+                }, );
+                time = null
+            }, 50);
+        })
+    </script>
+</body>
+
+</html>

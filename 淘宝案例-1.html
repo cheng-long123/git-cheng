@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <!-- 导入页面的基本样式 -->
+    <link rel="stylesheet" href="./css/search.css" />
+    <!-- 导入 jQuery -->
+    <script src="./lib/jquery.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Logo -->
+        <img src="./images/taobao_logo.png" alt="" class="logo" />
+
+        <div class="box">
+            <!-- tab 栏 -->
+            <div class="tabs">
+                <div class="tab-active">宝贝</div>
+                <div>店铺</div>
+            </div>
+            <!-- 搜索区域（搜索框和搜索按钮） -->
+            <div class="search-box">
+                <input id="ipt" type="text" class="ipt" placeholder="请输入要搜索的内容" /><button class="btnSearch">
+                    搜索
+                </button>
+            </div>
+            <div id="suggest-list"></div>
+        </div>
+    </div>
+
+    <!----------- 搜索建议 ===========-->
+    <!-- 导入模板引擎 -->
+    <script src="./lib/template-web.js"></script>
+    <script type="text/html" id="moban">
+        {{each result val}}
+        <div class="" suggest-itme></div>
+        <div class="suggest-item">{{val[0]}}</div>
+        {{/each}}
+    </script>
+    <script>
+        // 键盘弹起事件
+        $('.ipt').keyup(function () {
+            //获取输入框的值
+            var zhi = $(this).val().trim();
+            //获取搜索建议
+            getSuggest(zhi);
+        })
+
+
+        function getSuggest(v) {
+
+            $.getJSON('https://suggest.taobao.com/sug?callback=?', {
+                    q: v
+                },
+                function (res) {
+                    // res就是服务器的返回值
+                    console.log(res);
+                    var str = template('moban', res);
+                    console.log(str);
+                    $('#suggest-list').html(str);
+                }
+            )
+        };
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
